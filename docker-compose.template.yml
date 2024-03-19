@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  fplll-devel:
+    build:
+      context: .
+      dockerfile: fplll-devel.dockerfile
+    image: latred:latest
+    container_name: latred-devel
+    userns_mode: "keep-id:uid=1000,gid=1000"
+    volumes: 
+      ${DOCKER_HOST_VOLUMES}
+      - "vscode-config:/home/lll/.vscode-server:rw"
+      - ".:/home/lll/ProjDir:rw"
+    networks:
+      - nw
+    deploy:
+      resources:
+        limits:
+          ${DOCKER_RESOURCE_LIMITS}      
+
+    working_dir: "/home/lll/ProjDir"      
+    # command: ["tail", "-f", "/dev/null"]
+
+
+volumes:
+  vscode-config:
+    driver: local
+networks:
+  nw:
+    driver: bridge
