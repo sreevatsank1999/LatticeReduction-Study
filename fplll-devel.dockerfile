@@ -1,11 +1,6 @@
 FROM docker.io/fplll/fpylll:0.6.1
 
-ARG DOCKER_LANG=en_US
 ARG DOCKER_TIMEZONE=America/Los_Angeles
-
-ENV LANG=${DOCKER_LANG}.UTF-8 \
-    LANGUAGE=${DOCKER_LANG}:UTF-8 \
-    LC_ALL=${DOCKER_LANG}.UTF-8
 
 # Creating a user
 ARG USERNAME=lll
