@@ -12,6 +12,10 @@ RUN passwd -d ${USERNAME}
 RUN echo "$DOCKER_TIMEZONE" > /etc/timezone && \
     ln -s -f /usr/share/zoneinfo/$DOCKER_TIMEZONE /etc/localtime
 
+RUN apt-get update && apt-get install -y \
+    sudo \
+    vim 
+
 # RUN usermod -l ${USERNAME} $(id -un 1000) && \
 #     groupmod -n ${USERNAME} $(id -gn 1000) && \
 #     usermod -d /home/${USERNAME} -m ${USERNAME}
