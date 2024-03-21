@@ -85,7 +85,20 @@ def plot_gso_norms_sparse(gso_norms, block_size, start=0, stop=-1, step=5, basen
 
 
 # Load results
-filename = "SDBKZ-convergence-2024-03-21_09-25-31.pickle"
+algo = "slide";
+if algo == "bkz":
+    filename = "BKZ-convergence-2024-03-21_04-26-48.pickle"
+    exp_name="BKZ"          # experiment name
+elif algo == "sdbkz":
+    filename = "SDBKZ-convergence-2024-03-21_09-25-31.pickle"
+    exp_name="SDBKZ"          # experiment name
+elif algo == "slide":
+    filename = "Slide-convergence-2024-03-21_14-48-27.pickle"
+    exp_name="Slide"          # experiment name
+else:
+    raise ValueError("Invalid algorithm")
+
+# filename = "Slide-convergence-2024-03-21_14-48-27.pickle"
 results = pickle.load(open(f"results/{filename}", "rb"));
 
 
@@ -95,7 +108,7 @@ try:
 except(FileExistsError):
     pass
 
-plot_gso_norms_sparse(results["gso_norms"], results["blocksize"], start=0, stop=50, step=2, basename=f"{outdir}/sdbkz-gso-norms")
+plot_gso_norms_sparse(results["gso_norms"], results["blocksize"], start=0, stop=50, step=2, basename=f"{outdir}/{exp_name}-gso-norms")
 
 
 gso_norms = results["gso_norms"];
@@ -115,4 +128,4 @@ for i, tour in enumerate(gso_norms[0:-1]):
         traces[str_bi][1].append(log_norm[bi]);
         traces[str_bi][2].append(0);
         
-plot_traces(traces, "SDBKZ convergence", "SDBKZ tour", "$2\\,\\log_2(\\cdot)$", f"results/plots/SDBKZ-convergence.png", yscale = 'linear')
+plot_traces(traces, f"{exp_name} convergence", f"{exp_name} tour", "$2\\,\\log_2(\\cdot)$", f"results/plots/{exp_name}-convergence.png", yscale = 'linear')

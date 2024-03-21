@@ -16,7 +16,6 @@ def qary128(dimension, block_size):
 
 
 nbSample = 3        # number of samples
-# dims = [ 8, 16, 32, 64, 128]          # dimension of the lattice
 dims = [ 8, 16, 32, 64, 128]          # dimension of the lattice
 
 seed = 2**61 - 1;       # Mersenne prime (M61) as seed
@@ -25,25 +24,36 @@ seed = 2**61 - 1;       # Mersenne prime (M61) as seed
 LLL_delta = 0.99;       # LLL reduction parameter   
 
 BKZ_delta = [0.99];       # BKZ reduction parameter   
-# BKZ_kappa = [2, 4, 8, 16, 32];          # BKZ reduction parameter   
-BKZ_kappa = [2, 4];          # BKZ reduction parameter   
+BKZ_kappa = [2, 4, 8, 16, 32];          # BKZ reduction parameter   
+
 # BZK_max_loops = 1000;                 # BKZ max reduction iterations
 BKZ_tours = 35;                     # BKZ tours
 
 # construct a map of all parameter combinations
 # param_map = [(i,j) for i in BKZ_delta for j in BKZ_kappa]
 
-classes = [];
-for d in BKZ_delta:
-    # BKZ_d = BKZFactory(f"BKZ-d{d}", algorithms.BKZWrapper, delta=d)
-    # BKZ_d = BKZFactory(f"SDBKZ-d{d}", algorithms.SDBKZWrapper, delta=d)
-    BKZ_d = BKZFactory(f"Slide-d{d}", algorithms.SlideWrapper)
-    classes.append(BKZ_d)
+# classes = [];
+# for d in BKZ_delta:       
+#     BKZ_d = BKZFactory(f"BKZ-d{d}", algorithms.BKZWrapper)
+#     # BKZ_d = BKZFactory(f"SDBKZ-d{d}", algorithms.SDBKZWrapper, delta=d)
+#     # BKZ_d = BKZFactory(f"Slide-d{d}", algorithms.SlideWrapper)
+#     classes.append(BKZ_d)
     
+algo = "bkz";
+d= BKZ_delta[0];
+if algo == "bkz":
+    BKZcls = BKZFactory(f"BKZ-d{d}", algorithms.BKZWrapper);
+    exp_name="BKZ"          # experiment name
+elif algo == "sdbkz":
+    BKZcls = BKZFactory(f"SDBKZ-d{d}", algorithms.SDBKZWrapper);
+    exp_name="SDBKZ"          # experiment name
+elif algo == "slide":
+    BKZcls = BKZFactory(f"Slide-d{d}", algorithms.SlideWrapper);
+    exp_name="Slide"          # experiment name
+else:
+    raise ValueError("Invalid algorithm")
 
-# exp_name="BKZ"          # experiment name
-# exp_name="SDBKZ"          # experiment name
-exp_name="Slide"          # experiment name
+classes = [BKZcls];
 
 setup_logging(exp_name,verbose=True)
 

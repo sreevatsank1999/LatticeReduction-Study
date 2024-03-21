@@ -28,12 +28,20 @@ BKZ_tours = 100;                     # BKZ tours
 # param_map = [(i,j) for i in BKZ_delta for j in BKZ_kappa]
 
 # BKZcls = BKZFactory("GSO-BKZ", KeepGSOBKZFactory(fpylll.algorithms.bkz.BKZReduction));
-BKZcls = KeepGSOBKZFactory(algorithms.SlideWrapper);
 
+algo = "sdbkz"
+if algo == "bkz":
+    BKZcls = KeepGSOBKZFactory(algorithms.BKZWrapper);
+    exp_name="BKZ-convergence"          # experiment name
+elif algo == "sdbkz":
+    BKZcls = KeepGSOBKZFactory(algorithms.SDBKZWrapper);
+    exp_name="SDBKZ-convergence"          # experiment name
+elif algo == "slide":
+    BKZcls = KeepGSOBKZFactory(algorithms.SlideWrapper);
+    exp_name="Slide-convergence"          # experiment name
+else:
+    raise ValueError("Invalid algorithm")
 
-# exp_name="BKZ-convergence"          # experiment name
-# exp_name="SDBKZ-convergence"          # experiment name
-exp_name="Slide-convergence"          # experiment name
 
 A = IntegerMatrix(dims[0], dims[0])
 # A.randomize("uniform", bits=50)

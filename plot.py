@@ -3,7 +3,20 @@ from plotting import metric_vs_delta
 
 
 # Load results
-results = pickle.load(open("results/BKZ-2024-03-21_09-48-11.pickle", "rb"));
+algo = "slide";
+if algo == "bkz":
+    filename = "BKZ-2024-03-21_04-26-48.pickle"
+    exp_name="BKZ"          # experiment name
+elif algo == "sdbkz":
+    filename = "SDBKZ-2024-03-21_09-25-31.pickle"
+    exp_name="SDBKZ"          # experiment name
+elif algo == "slide":
+    filename = "Slide-2024-03-21_14-48-27.pickle"
+    exp_name="Slide"          # experiment name
+else:
+    raise ValueError("Invalid algorithm")
+    
+results = pickle.load(open(f"results/{filename}", "rb"));
 
 # # Select traces to plot
 # dims = [ 8, 16, 32, 64, 128];
