@@ -3,7 +3,7 @@ from plotting import metric_vs_delta
 
 
 # Load results
-results = pickle.load(open("results/BKZ-2024-03-21_04-39-42.pickle", "rb"));
+results = pickle.load(open("results/BKZ-2024-03-21_09-48-11.pickle", "rb"));
 
 # # Select traces to plot
 # dims = [ 8, 16, 32, 64, 128];

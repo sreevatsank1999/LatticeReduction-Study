@@ -51,11 +51,12 @@ class SlideWrapper(object):
                
         self._i =0;
         params = BKZ.Param(block_size=2, flags=BKZ.DEFAULT)
-        self._core = BKZ.BKZReduction(self.M, self.lll_obj, params)
+        self._core = BKZ.Reduction(self.M, self.lll_obj, params)
         
         # WARNING: This is a hack. We should not have to call the HKZ postprocessing
-        self.num_rows = self._core.nodes;
-
+        # self.num_rows = self._core.nodes;
+        self.num_rows = self.A.nrows;
+        
     def tour(self, params, min_row=0, max_row=-1, tracer=dummy_tracer):
         """One BKZ loop over all indices.
 
@@ -71,7 +72,7 @@ class SlideWrapper(object):
         self.sld_potential = self.M.get_slide_potential(0,self.num_rows,params.block_size);
         
         with tracer.context("tour",self._i):
-            clean  = self._core.sld_tour(self._i, params, min_row, max_row)
+            clean  = self._core.slide_tour(self._i, params, min_row, max_row)
         
         clean &= self.hkz_postprocessing(params, tracer)
         

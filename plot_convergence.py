@@ -85,7 +85,7 @@ def plot_gso_norms_sparse(gso_norms, block_size, start=0, stop=-1, step=5, basen
 
 
 # Load results
-filename = "SDBKZ-convergence-2024-03-21_05-24-23.pickle"
+filename = "SDBKZ-convergence-2024-03-21_09-25-31.pickle"
 results = pickle.load(open(f"results/{filename}", "rb"));
 
 

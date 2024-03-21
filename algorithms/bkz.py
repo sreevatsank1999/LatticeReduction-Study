@@ -47,7 +47,7 @@ class BKZWrapper(object):
         
         self._i =0;
         params = BKZ.Param(block_size=2, flags=BKZ.DEFAULT)
-        self._core = BKZ.BKZReduction(self.M, self.lll_obj, params)
+        self._core = BKZ.Reduction(self.M, self.lll_obj, params)
 
     def tour(self, params, min_row=0, max_row=-1, tracer=dummy_tracer):
         """One BKZ loop over all indices.

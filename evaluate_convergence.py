@@ -3,9 +3,11 @@ import datetime
 import fpylll
 from fpylll import *
 from fpylll.tools.compare import compare_bkz, setup_logging, BKZFactory, qary30
-from fpylll.tools.bkz_plot import KeepGSOBKZFactory
+from utils import KeepGSOBKZFactory
 
 import fpylll.algorithms.bkz
+
+import algorithms
 
 import pickle
 
@@ -26,10 +28,12 @@ BKZ_tours = 100;                     # BKZ tours
 # param_map = [(i,j) for i in BKZ_delta for j in BKZ_kappa]
 
 # BKZcls = BKZFactory("GSO-BKZ", KeepGSOBKZFactory(fpylll.algorithms.bkz.BKZReduction));
-BKZcls = KeepGSOBKZFactory(fpylll.algorithms.bkz.BKZReduction);
+BKZcls = KeepGSOBKZFactory(algorithms.SlideWrapper);
 
 
-exp_name="SDBKZ-convergence"          # experiment name
+# exp_name="BKZ-convergence"          # experiment name
+# exp_name="SDBKZ-convergence"          # experiment name
+exp_name="Slide-convergence"          # experiment name
 
 A = IntegerMatrix(dims[0], dims[0])
 # A.randomize("uniform", bits=50)
@@ -39,7 +43,7 @@ A.randomize("qary", bits=128, k=dims[0]//2)
 
 bkz = BKZcls(A);
 
-params = BKZ.Param(block_size=BKZ_kappa[0],flags=BKZ.SD_VARIANT)
+params = BKZ.Param(block_size=BKZ_kappa[0],flags=BKZ.SLD_RED)
 
 for i in range(BKZ_tours):
     bkz.tour(params);
