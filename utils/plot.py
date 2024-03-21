@@ -12,6 +12,16 @@ traces_ty = {
     "hv/hv": "half_volume_ratio"
 }
 
+def normalize_traces(traces):
+    
+    traces_norm = {};
+    for name,(x, trace,std) in traces.items():
+        x = np.array(x); trace = np.array(trace); std = np.array(std);
+        trace_max = np.max(trace);
+        traces_norm[name] = (x, trace/trace_max, std/trace_max);
+    
+    return traces_norm;
+
 def extract_traces(results, trace_param, xi, zi):
     traces = {};
     
@@ -53,7 +63,8 @@ def plot_traces(traces, title, xlabel, ylabel, filename, nsigma=2, ycscale = 'li
 
     # Ensure matplotlib does not use any Xwindows backend
     plt.switch_backend('Agg')
-
+    # plt.rcParams.update({'text.usetex': True})
+    
     if ycscale == 'log':
         plt.semilogy();
         

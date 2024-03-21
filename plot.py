@@ -17,8 +17,8 @@ metric_vs_delta.plot_delta(results, dims, ks, deltas, outdir);
 
 
 # Select traces to plot
-# dims = [ 3, 8, 16, 32, 64, 128];
-dims = [32, 64];
+dims = [ 3, 8, 16, 32, 64, 128];
+# dims = [32, 64];
 ks = [2, 4, 8, 16];
 deltas = [0.99];
 
