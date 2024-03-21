@@ -90,7 +90,7 @@ def plot_kappa(results, dims, ks, deltas, outdir):
     ## ------------------------------------------------------------------------------------------------------------------------------ ##
 
 
-    # Plot hv ratio vs. BKZ Kappa
+    # Plot rhf  vs. BKZ Kappa
     trace = "rhf"   
     filename = f"{outdir}/BKZ-rhf_vs_kappa_n_dim.png";
 
@@ -98,9 +98,9 @@ def plot_kappa(results, dims, ks, deltas, outdir):
     params = trace_param(dims, ks, deltas, trace);
 
     traces = extract_traces(results, params, 1, 0);
-    plot_traces(traces, "Root Hermit Factor ($\gamma$) vs. BKZ $\kappa$", "$\kappa$", "$\gamma$", filename)
+    plot_traces(traces, "Root Hermit Factor ($\gamma$) vs. BKZ $\kappa$", "$\kappa$", "$\gamma$", filename, ylim = [0.96,1.03])
 
     filename = f"{outdir}/BKZ-rhf_vs_kappa_n_dim_norm.png";
     traces = normalize_traces(traces);
-    plot_traces(traces, "Root Hermit Factor ($\gamma$) vs. BKZ $\kappa$", "$\kappa$", "$\gamma_{norm}$", filename)
+    plot_traces(traces, "Root Hermit Factor ($\gamma$) vs. BKZ $\kappa$", "$\kappa$", "$\gamma_{norm}$", filename, ylim = [0.98,1.0])
     ## ------------------------------------------------------------------------------------------------------------------------------ ##

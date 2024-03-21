@@ -17,8 +17,9 @@ def normalize_traces(traces):
     traces_norm = {};
     for name,(x, trace,std) in traces.items():
         x = np.array(x); trace = np.array(trace); std = np.array(std);
-        trace_max = np.max(trace);
-        traces_norm[name] = (x, trace/trace_max, std/trace_max);
+        # trace_max = np.max(trace);
+        t0 = trace[0];
+        traces_norm[name] = (x, trace/t0, std/t0);
     
     return traces_norm;
 
@@ -59,13 +60,13 @@ def get_samples_raw(results, dim,k,algo,trace):
     return samples
     
 
-def plot_traces(traces, title, xlabel, ylabel, filename, nsigma=2, ycscale = 'linear'):
+def plot_traces(traces, title, xlabel, ylabel, filename, nsigma=2, yscale = 'linear', xlim=None, ylim=None):
 
     # Ensure matplotlib does not use any Xwindows backend
     plt.switch_backend('Agg')
     # plt.rcParams.update({'text.usetex': True})
     
-    if ycscale == 'log':
+    if yscale == 'log':
         plt.semilogy();
         
     # Create a figure and an axis
@@ -80,7 +81,12 @@ def plot_traces(traces, title, xlabel, ylabel, filename, nsigma=2, ycscale = 'li
 
     # Adding legend to the plot with larger font size
     ax.legend(fontsize='large')
-    ax.set_yscale(ycscale);
+    ax.set_yscale(yscale);
+    
+    if xlim is not None:
+        ax.set_xlim(xlim);
+    if ylim is not None:
+        ax.set_ylim(ylim);
     
     # Adding title and labels with larger font size
     ax.set_title(title, fontsize='x-large')
