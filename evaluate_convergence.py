@@ -5,6 +5,8 @@ from fpylll import *
 from fpylll.tools.compare import compare_bkz, setup_logging, BKZFactory, qary30
 from utils import KeepGSOBKZFactory
 
+# from fpylll.fplll.bkz_param import BKZParam as BKZParam2
+
 import fpylll.algorithms.bkz
 
 import algorithms
@@ -12,7 +14,7 @@ import algorithms
 import pickle
 
 nbSample = 1        # number of samples
-dims = [64]          # dimension of the lattice
+dims = [16]          # dimension of the lattice
 
 seed = 2**61 - 1;       # Mersenne prime (M61) as seed
 
@@ -20,7 +22,7 @@ seed = 2**61 - 1;       # Mersenne prime (M61) as seed
 LLL_delta = 0.99;       # LLL reduction parameter   
 
 BKZ_delta = [0.99];       # BKZ reduction parameter   
-BKZ_kappa = [16];          # BKZ reduction parameter   
+BKZ_kappa = [4];          # BKZ reduction parameter   
 # BZK_max_loops = 1000;                 # BKZ max reduction iterations
 BKZ_tours = 100;                     # BKZ tours
 
@@ -33,12 +35,15 @@ algo = "sdbkz"
 if algo == "bkz":
     BKZcls = KeepGSOBKZFactory(algorithms.BKZWrapper);
     exp_name="BKZ-convergence"          # experiment name
+    params = BKZ.Param(block_size=BKZ_kappa[0],flags=BKZ.NO_LLL)
 elif algo == "sdbkz":
     BKZcls = KeepGSOBKZFactory(algorithms.SDBKZWrapper);
     exp_name="SDBKZ-convergence"          # experiment name
+    params = BKZ.Param(block_size=BKZ_kappa[0],flags=BKZ.SD_VARIANT)
 elif algo == "slide":
     BKZcls = KeepGSOBKZFactory(algorithms.SlideWrapper);
     exp_name="Slide-convergence"          # experiment name
+    params = BKZ.Param(block_size=BKZ_kappa[0],flags=BKZ.SLD_RED)
 else:
     raise ValueError("Invalid algorithm")
 
@@ -51,7 +56,6 @@ A.randomize("qary", bits=128, k=dims[0]//2)
 
 bkz = BKZcls(A);
 
-params = BKZ.Param(block_size=BKZ_kappa[0],flags=BKZ.SLD_RED)
 
 for i in range(BKZ_tours):
     bkz.tour(params);

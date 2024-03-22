@@ -85,15 +85,15 @@ def plot_gso_norms_sparse(gso_norms, block_size, start=0, stop=-1, step=5, basen
 
 
 # Load results
-algo = "slide";
+algo = "bkz";
 if algo == "bkz":
-    filename = "BKZ-convergence-2024-03-21_04-26-48.pickle"
+    filename = "BKZ-convergence-2024-03-21_15-06-56.pickle"
     exp_name="BKZ"          # experiment name
 elif algo == "sdbkz":
-    filename = "SDBKZ-convergence-2024-03-21_09-25-31.pickle"
+    filename = "SDBKZ-convergence-2024-03-21_15-07-42.pickle"
     exp_name="SDBKZ"          # experiment name
 elif algo == "slide":
-    filename = "Slide-convergence-2024-03-21_14-48-27.pickle"
+    filename = "Slide-convergence-2024-03-21_15-08-40.pickle"
     exp_name="Slide"          # experiment name
 else:
     raise ValueError("Invalid algorithm")

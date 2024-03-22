@@ -2,7 +2,7 @@ import datetime
 
 import fpylll
 from fpylll import *
-from fpylll.tools.compare import compare_bkz, setup_logging, BKZFactory
+from fpylll.tools.compare import compare_bkz, setup_logging, BKZFactory, qary30
 
 import algorithms
 
@@ -16,9 +16,10 @@ def qary128(dimension, block_size):
 
 
 nbSample = 3        # number of samples
-dims = [ 8, 16, 32, 64, 128]          # dimension of the lattice
+dims = [ 3, 8, 16, 32, 64, 128]          # dimension of the lattice
 
 seed = 2**61 - 1;       # Mersenne prime (M61) as seed
+# seed = 42;       
 
 # Parameters 
 LLL_delta = 0.99;       # LLL reduction parameter   
@@ -39,16 +40,16 @@ BKZ_tours = 35;                     # BKZ tours
 #     # BKZ_d = BKZFactory(f"Slide-d{d}", algorithms.SlideWrapper)
 #     classes.append(BKZ_d)
     
-algo = "bkz";
+algo = "sdbkz";
 d= BKZ_delta[0];
 if algo == "bkz":
-    BKZcls = BKZFactory(f"BKZ-d{d}", algorithms.BKZWrapper);
+    BKZcls = BKZFactory(f"BKZ-d{d}", algorithms.BKZWrapper, flags=BKZ.NO_LLL);
     exp_name="BKZ"          # experiment name
 elif algo == "sdbkz":
-    BKZcls = BKZFactory(f"SDBKZ-d{d}", algorithms.SDBKZWrapper);
+    BKZcls = BKZFactory(f"SDBKZ-d{d}", algorithms.SDBKZWrapper, flags=BKZ.SD_VARIANT);
     exp_name="SDBKZ"          # experiment name
 elif algo == "slide":
-    BKZcls = BKZFactory(f"Slide-d{d}", algorithms.SlideWrapper);
+    BKZcls = BKZFactory(f"Slide-d{d}", algorithms.SlideWrapper, flags=BKZ.SLD_RED);
     exp_name="Slide"          # experiment name
 else:
     raise ValueError("Invalid algorithm")
