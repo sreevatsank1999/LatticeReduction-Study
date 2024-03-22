@@ -51,6 +51,8 @@ class SDBKZWrapper(object):
         params = BKZ.Param(block_size=2, flags=BKZ.DEFAULT)
         self._core = BKZ.Reduction(self.M, self.lll_obj, params)
 
+        self.num_rows = self.A.nrows;
+        
     def tour(self, params, min_row=0, max_row=-1, tracer=dummy_tracer):
         """One BKZ loop over all indices.
 
@@ -65,8 +67,9 @@ class SDBKZWrapper(object):
 
         with tracer.context("tour",self._i):
             clean  = self._core.sd_tour(self._i, params, min_row, max_row)
-        
-        clean &= self.hkz_postprocessing(params, tracer)
+            self.M.update_gso()
+            
+            clean &= self.hkz_postprocessing(params, tracer)
         
         self._i += 1;
         return clean
@@ -81,8 +84,8 @@ class SDBKZWrapper(object):
         """
         # WARNING: This is a hack. We should not have to call the HKZ postprocessing
         # num_rows = self._core.nodes;
-        num_rows = self.A.nrows;
+
         with tracer.context("postprocessing"):
-            (clean,kappa_max) = self._core.hkz(params,num_rows - params.block_size, num_rows)
+            (clean,kappa_max) = self._core.hkz(params,self.num_rows - params.block_size, self.num_rows)
         
         return clean

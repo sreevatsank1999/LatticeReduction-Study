@@ -73,8 +73,9 @@ class SlideWrapper(object):
         
         with tracer.context("tour",self._i):
             clean  = self._core.slide_tour(self._i, params, min_row, max_row)
-        
-        clean &= self.hkz_postprocessing(params, tracer)
+            self.M.update_gso()
+            
+            clean &= self.hkz_postprocessing(params, tracer)
         
         self._i += 1;
         return clean
