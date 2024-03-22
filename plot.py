@@ -3,15 +3,15 @@ from plotting import metric_vs_delta
 
 
 # Load results
-algo = "slide";
+algo = "sdbkz";
 if algo == "bkz":
-    filename = "BKZ-2024-03-21_04-26-48.pickle"
+    filename = "BKZ-2024-03-21_15-34-42.pickle"
     exp_name="BKZ"          # experiment name
 elif algo == "sdbkz":
-    filename = "SDBKZ-2024-03-21_09-25-31.pickle"
+    filename = "SDBKZ-2024-03-21_19-15-46.pickle"
     exp_name="SDBKZ"          # experiment name
 elif algo == "slide":
-    filename = "Slide-2024-03-21_14-48-27.pickle"
+    filename = "Slide-2024-03-21_18-27-57.pickle"
     exp_name="Slide"          # experiment name
 else:
     raise ValueError("Invalid algorithm")
@@ -37,4 +37,4 @@ deltas = [0.99];
 
 outdir = "results/plots"
 
-metric_vs_delta.plot_kappa(results, dims, ks, deltas, outdir);
+metric_vs_delta.plot_kappa(results, dims, ks, deltas, outdir, exp_name);

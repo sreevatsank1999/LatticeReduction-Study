@@ -23,11 +23,11 @@ def normalize_traces(traces):
     
     return traces_norm;
 
-def extract_traces(results, trace_param, xi, zi):
+def extract_traces(results, trace_param, xi, zi, exp_name):
     traces = {};
     
     for param in trace_param:
-        x, std = get_sample(results, *param);
+        x, std = get_sample(results, *param, exp_name);
         if x is None:
             continue;
         if param[zi] not in traces:
@@ -37,9 +37,9 @@ def extract_traces(results, trace_param, xi, zi):
         traces[param[zi]][2].append(std);
     return traces
 
-def get_sample(results, dim,k,delta,trace):
+def get_sample(results, dim,k,delta,trace, exp_name):
     
-    algo = f"BKZ-d{delta}";
+    algo = f"{exp_name}-d{delta}";
     try:
         nbSample = len(results[dim][k][algo]);
         samples = [float(results[dim][k][algo][i][1].data[trace]) for i in range(nbSample)];
